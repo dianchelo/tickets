@@ -262,6 +262,13 @@ class EventController extends Controller
         $event->description = $request->input('description');
 
         $event->save();
+
+        if(isset($request->tags)) {
+            $event->tags()->sync($request->tags, true);
+        }else{
+            $event->tags()->sync(array());
+        }
+
         // set flash msg success
         Session::flash('success', 'This event was succesfully edited.');
 

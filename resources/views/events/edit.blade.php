@@ -37,7 +37,7 @@
 				<dl class="dl-horizontal">
 					<input type="text" id="eventid" value="{{ $event['event']['id'] }}" style="display:none;" readonly>  
 					<dt>Event date : </dt>
-					<dd>{{ $event->tags()-allRelatedIds()->toArray()  }}::{{ date('l j F, Y', strtotime($event['event']['event_date'])) }}</dd>
+					<dd>{{ date('l j F, Y', strtotime($event['event']['event_date'])) }}</dd>
 				</dl>
 				
 				<dl class="dl-horizontal">
@@ -96,7 +96,8 @@
 {!! Html::script('js/parsley.min.js') !!}
 {!! Html::script('js/select2/select2.min.js') !!}
 
-	<script type="text/javascript">
+	<script>
 		$('.select2-multi').select2();
+		$('.select2-multi').select2().val({!! json_encode($event->tags()->pluck('tag_id')->toArray()) !!}).trigger('change');
 	</script>
 @endsection
