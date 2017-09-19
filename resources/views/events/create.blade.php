@@ -5,8 +5,13 @@
 @section('stylesheets')
 
 	{!! Html::style('css/parsley.css') !!}
+	{!! Html::style('css/select2/select2.min.css') !!}
 	<style>
 	#create_location{
+		display:none;
+		margin-top:20px;
+	}
+	#create_tag{
 		display:none;
 		margin-top:20px;
 	}
@@ -48,9 +53,49 @@
 			</div>
 
 			<div class="form-group">
+				{{ Form::label('category_id', 'Category:' , ['class' => 'col-sm-2 control-label']) }}
+				<div class="col-sm-10">
+					<select class="form-control" name="category_id">
+						@foreach ($data['categories'] as $category)
+							<option value="{{ $category->id }}">{{ $category->name }}</option>
+						@endforeach
+					</select>
+				</div>
+			</div>
+
+
+			<div class="form-group">
+				{{ Form::label('tags_id', 'Tags:' , ['class' => 'col-sm-2 control-label']) }}
+				<div class="col-sm-10">
+					<select class="form-control select2-multi" id="tags_id" name="tags[]" multiple="multiple">
+						@foreach ($data['tags'] as $tag)
+							<option value="{{ $tag->id }}">{{ $tag->name }}</option>
+						@endforeach
+						<option value="CREATE">Create new tag</option>
+					</select>
+				</div>
+			</div>
+
+			<div id="create_tag" class="form-group row well">
+				<div class="col-md-11 col-md-offset-1">
+					<div class="form-group">
+						{{ Form::label('add_tag_name', 'New tag name:', ['class' => 'col-sm-2 control-label']) }}
+						<div class="col-sm-9">
+						{{ Form::text('add_tag_name', null, array('class' => 'form-control new-tag'))}}
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
 				{{ Form::label('location_id', 'Location:', ['class' => 'col-sm-2 control-label']) }}
 				<div class="col-sm-10">
-				{!! Form::select('location_id', $data['locations'] +['CREATE' => 'Create Location']  , null, ['id' => 'location_id', 'placeholder' => 'Pick a location...', 'class' => 'form-control', 'required' => ''])!!}
+				<select class="form-control" id="location_id" name="location_id">
+					@foreach ($data['locations'] as $location)
+						<option value="{{ $location->id }}">{{ $location->name }}</option>
+					@endforeach
+					<option value="CREATE">Create new location</option>
+				</select>
 				</div>
 			</div>
 
@@ -121,7 +166,7 @@
 			<div class="form-group">
 				{{ Form::label('amount_tickets', 'Creator:', ['class' => 'col-sm-2 control-label']) }}
 				<div class="col-sm-10">
-				{!! Form::text('creator', null, array('class' => 'form-control', 'placeholder' => $data['ip'], 'readonly')) !!}
+				<input type="text" name="creator" class="form-control" value="{{ $data['ip'] }}" readonly="readonly" hidden>
 				</div>
 			</div>
 
@@ -135,28 +180,92 @@
 @endsection
 
 @section('scripts')
+{!! Html::script('js/jscolor.js') !!}
+{!! Html::script('js/parsley.min.js') !!}
+{!! Html::script('js/select2/select2.min.js') !!}
 <script>
 
 // Todo : Debug dynamic added class not working with parsley. 
 
-	$('#location_id').on('change', function(){
-		if($(this).val() === 'CREATE') {
-			$('#create_location').show();
-			$('.new-location').each(function() {
-				$(this).attr("required", true);
-			});
-			return false;
-		}
-		else {
-			$('#create_location').hide();
-			$('.new-location').each(function() {
-				$(this).removeAttr('required');
-			});
-			return false;
-		}
-		//alert($(this).val());
+	
+	$(function() {
+
+		$('#location_id').on('change', function(){
+			if($(this).val() == 'CREATE') {
+				console.log('1');
+				$('#create_location').show();
+				$('.new-location').each(function() {
+					$(this).attr("required", true);
+				});
+				return false;
+			}
+			else {
+				$('#create_location').hide();
+				$('.new-location').each(function() {
+					$(this).removeAttr('required');
+				});
+				return false;
+			}
+		});
+
+		$('.select2-multi').select2();
+
+// 		$('').on('change', function(){
+// 			alert('ass');
+// 		})
+
+// 		$('#one').on('click', function(){
+
+// alert($(".select2-multi").val());
+// 		});
+		//console.log($('#tags_id').val());
+//$(".select2-multi").val("CREATE").trigger("change");
+		$('.select2-multi').on('change', function(){
+			var values = $(".select2-multi").val();
+			if (values.indexOf("CREATE") >= 0) {
+				$('#tags_id').prop('disabled', 'disabled');
+				console.log('one');
+				$("#create_tag").show();
+				//alert(values);
+				//$("#tags_id").val(null).trigger("change");
+				//$("#tags_id").hide();
+				// $(values).val(null).trigger("change"); 
+				
+				// $("#select2-multi").select2({
+				// 	maximumSelectionLength: 1
+				// }); 
+				//$(".tags_id").val("CREATE"); 
+
+
+
+				
+			}
+			
+
+			// if(values == 'CREATE') {
+			// 	alert('1');
+			// }
+			
+
+			// if($(this).val() === 'CREATE') {
+				
+			// 	$('select2-multi').attr('maximumSelectionLength', '1');
+				
+			// 	$('.new-tag').each(function() {
+			// 		$(this).attr("required", true);
+			// 	});
+			// 	return false;
+			// }
+			// else {
+			// 	$('#create_tag').hide();
+			// 	$('.new-tag').each(function() {
+			// 		$(this).removeAttr('required');
+			// 	});
+			// 	return false;
+			// }
+		});
+    
 	});
+	
 </script>
-{!! Html::script('js/jscolor.js') !!}
-{!! Html::script('js/parsley.min.js') !!}
 @endsection

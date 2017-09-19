@@ -18,6 +18,11 @@
 
     </div>
 
+    <div id="bottom-container" class="@yield('bottom-container-class')">
+      @yield('instagram')
+    </div>
+    
+
     @include('partials._footer')
     <!-- end of .container -->
 

@@ -154,13 +154,44 @@ class TicketController extends Controller
 
         }
 
+
+
         foreach($tickets  as $ticket) {
-                if($ticket->status != 'S' || $ticket->status != 'R') {
-                    echo '<a href="/events/'. $event_id .'/'. $ticket->hash .'" class="list-group-item" data-ticket-id="'.$ticket->tid.'">'; 
-                    echo '<h5><span rel="tag">1</span>'. $ticket->tid. ' </h5>';
-                    echo '</a>';
-                }
+            // TODO : Assign status to the availible tickets
+            // Facing problems with usort multidimensional []
+            echo '<a href="/events/'. $event_id .'/'. $ticket->hash .'" class="list-group-item" data-ticket-id="'.$ticket->tid.'" '.((isset($ticket->status))?'data-status="'.$ticket->status.'"':"").'>'; 
+            echo '<h5><span rel="tag">1</span>'. $ticket->tid. ' </h5>';
+            echo '</a>';
+        }
+
+        return;
+    }
+
+    function getTicketsById($event_id){
+        $data = [];
+        $availbleTickets = 0;
+
+        $tickets = DB::table('tickets')
+            ->select(DB::raw('tickets.id as tid, tickets.*, ticket_reservations.*'))
+            ->where(function($query) use ($event_id) {
+                $query->where('tickets.event_id', '=', $event_id);       
+            })
+            ->leftJoin('ticket_reservations', 'tickets.id', '=', 'ticket_reservations.ticket_id')
+            ->limit(100000)
+            ->get();
+
+        foreach ($tickets as $key => $value) {
+            if($value->status != 'R' && $value->status != 'S') {
+                $availbleTickets++;
             }
+        }
+
+        $data = [
+            'tickets' => $tickets,
+            'availbleTickets' => $availbleTickets
+        ];
+
+        return $data;
     }
 
 

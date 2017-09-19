@@ -24,6 +24,19 @@ body, html {
 
 }
 
+.bottom-container1{
+    height: 580px; 
+}
+
+.list-bg{
+   background-image: url('../img/event-bg-gray20.png');
+    height: 20%; 
+    background-position: center;
+    background-repeat:repeat;
+    border-bottom:1px solid #077260;
+
+}
+
 .navbar-default{
   background:transparent;
   background-image:none;
@@ -146,4 +159,34 @@ h6 {
 
 .btn-default .badge{
   background-color:#f7c8ae;
+}
+
+.form-spacing-top {
+  margin-top:30px;
+}
+
+#event-list-table{
+  border:0px solid #fff;
+}
+#event-list-table tr td .event-table-title a{
+  text-decoration: :none;
+  color:black;
+}
+
+#event-list-table tr:hover > td .event-table-title a{
+  color:red;
+
+}
+
+.table-borderless > tbody > tr > td,
+.table-borderless > tbody > tr > th,
+.table-borderless > tfoot > tr > td,
+.table-borderless > tfoot > tr > th,
+.table-borderless > thead > tr > td,
+.table-borderless > thead > tr > th {
+    border: none;
+}
+
+#instagram{
+  background-color:#CCCCCC;
 }

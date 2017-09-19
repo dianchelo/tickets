@@ -13,6 +13,7 @@ class AddEventSimulationTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('event_simulation');
         Schema::create('event_simulation', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('event_id');
@@ -30,5 +31,7 @@ class AddEventSimulationTable extends Migration
     public function down()
     {
         //
+        Schema::dropIfExists('event_simulation');
+
     }
 }

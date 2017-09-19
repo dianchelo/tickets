@@ -56,7 +56,7 @@
 
  	<div class="row">
  		<div class="col-md-12 text-center">
- 			<h2>Naderende evenementen s</h2>
+ 			<h2>Naderende evenementen</h2>
  		</div>
  	</div>
 

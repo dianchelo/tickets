@@ -13,6 +13,7 @@ class CreateTicketReservationTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('ticket_reservations');
         Schema::create('ticket_reservations', function($table)
         {
             $table->increments('id');
@@ -32,5 +33,6 @@ class CreateTicketReservationTable extends Migration
     public function down()
     {
         //
+        Schema::dropIfExists('ticket_reservations');
     }
 }

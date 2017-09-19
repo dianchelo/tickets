@@ -16,26 +16,44 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <!--- ELEMENTS FOR LATER USE 
           <ul class="nav navbar-nav">
-            <li class="active"><a href="/">Home</a></li>
-            <li><a href="/about">About</a></li>
-            <li><a href="/contact">Contact</a></li>
-            <li><a href="/events/create">Create Event</a></li>
+            <li class={ Request::is('/') ? "active" : "" }}><a href="/">Home</a></li>
+            <li class={ Request::is('/') ? "active" : "" }}><a href="/about">About</a></li>
+            <li class={ Request::is('/') ? "active" : "" }}><a href="/contact">Contact</a></li>
+            <li class={ Request::is('/') ? "active" : "" }}><a href="/events/create">Create Event</a></li>
           </ul>
           -->
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="/events/create" class="btn btn-green btn-lg" role="button">Create Event</a></li>
-            <!--- Account for later use 
-            <li class="dropdown">
-              <a href="/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Account <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">Separated link</a></li>
-              </ul>
-            </li>
-            -->
+            @if (Auth::guest())
+                <li><a href="{{ route('login.facebook') }}">Login FB</a></li>
+                <li><a href="{{ route('login') }}">Login</a></li>
+                <li><a href="{{ route('register') }}">Register</a></li>
+            @else
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        {{ Auth::user()->name }} <span class="caret"></span>
+                    </a>
+
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="">My tickets for sale</a></li>
+                        <li><a href="">Purchased tickets</a></li>
+                        <li><a href="{{ route('categories.index') }}">Categories</a></li>
+                        <li><a href="{{ route('tags.index') }}">Tags</a></li>
+                        <li>
+                            <a href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
+                                         document.getElementById('logout-form').submit();">
+                                Logout
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                {{ csrf_field() }}
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="/events/create" class="btn btn-green btn-lg" role="button">Create Event</a></li>
+                <li><a href="/tickets/create" class="btn btn-gold btn-lg" role="button">Sell tickets</a></li>
+            @endif
           </ul>
         </div>
         <!-- /.navbar-collapse -->

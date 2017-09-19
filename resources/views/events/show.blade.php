@@ -49,7 +49,7 @@ span[rel="tag"]:hover {
  			<span class="glyphicon glyphicon-calendar btn-lg" aria-hidden="true"></span>  {{ date('l j F, Y', strtotime($data['event']['event_date'])) }}
  		</div>
  		<div class="col-md-2 col-md-offset-0 text-center  ">
- 			 <span class="glyphicon glyphicon-map-marker btn-lg" aria-hidden="true"></span>  {{ date('l j F, Y', strtotime($data['event']['event_date'])) }}
+ 			 <span class="glyphicon glyphicon-map-marker btn-lg" aria-hidden="true"></span>  {{ $data['location']->name}}
  		</div>
  	</div>
 
@@ -61,6 +61,17 @@ span[rel="tag"]:hover {
 	<div id="settings" class="row" style="margin-top:20px; display:;" >
 		<div class="col-md-12">
 			<div class="well">
+
+				<dl class="dl-horizontal">
+					<dt>url:</dt>
+					<dd><a href="{{ URL::to('events/' . $data['event']->id) }}"> {{ URL::to('events/' . $data['event']->slug) }}</a></dd>
+				</dl>
+
+				<dl class="dl-horizontal">
+					<dt>category:</dt>
+					<dd>{{ $data['event']->category->name }}</dd>
+				</dl>
+
 				<dl class="dl-horizontal">
 					<input type="text" id="eventid" value="{{ $data['event']['id'] }}" style="display:none;" readonly>  
 					<dt>Event date : </dt>
@@ -69,7 +80,7 @@ span[rel="tag"]:hover {
 				
 				<dl class="dl-horizontal">
 					<dt>Updated at : </dt>
-					<dd>time : {{ $data['event']['creator'] }}
+					<dd> {{ date('l j F, Y', strtotime($data['event']['updated_at'])) }}
 
 					</dd>
 				</dl>
@@ -88,10 +99,19 @@ span[rel="tag"]:hover {
 
 				
 				<hr>
+					<div class="tags">
+						@foreach($data['event']->tags as $tag)
+						<span class="label label-default">{{ $tag->name }} </span>
+
+						@endforeach
+
+
+					</div>
 
 
 
 
+				<hr>
 
 
 				@if($data['event']['creator'] == $data['ip'])
@@ -101,7 +121,11 @@ span[rel="tag"]:hover {
 						{!! Html::linkRoute('events.edit', 'Edit', array($data['event']['id']), array('class' => 'btn btn-primary btn-block')) !!}
 						</div>
 						<div class="col-sm-6">
-							{!! Html::linkRoute('events.destroy', 'Delete', array($data['event']['id']), array('class' => 'btn btn-danger btn-block')) !!}
+						{!! Form::open(['route' => ['events.destroy', $data['event']->id], 'method' => 'DELETE']) !!}
+
+						{!! Form::submit('Delete', ['class' => 'btn btn-danger btn-block']) !!}
+							
+						{!! Form::close() !!}
 						</div>
 					</div>
 
@@ -161,7 +185,7 @@ span[rel="tag"]:hover {
 			@foreach($data['tickets'] as $ticket)
 
 				<a href="#" rel="tag" data-ticket-id="{{ $ticket->id }}"> 
-					<div class="bigger">{{ $ticket->id }}</div><br>
+					<div class="bigger">{{ $ticket->id }} !</div><br>
 					{{ $ticket->user_id }} <br>
 			    </a>
 

@@ -1,10 +1,9 @@
 var checkSim;
 var flag = 0;
+var allTicketsShown = 0;
 var eventid = $('#eventid').val();
 
 $(document).ready(function(){
-
-	
 	
 	allowAutoLoad = false;
 	//checkSimulationOnLoad(eventid);
@@ -13,69 +12,26 @@ $(document).ready(function(){
 
 	console.log(eventid);
 
-	
-
 	if(flag == 0) {
-		$.ajax({
-			type: "GET",
-			url: "/tickets/getbyeventid",
-			async: false,
-			data: {
-				'event_id' : eventid,
-				'case' : 'tickets',
-				'offset': flag,
-				'limit': 6,
-			},
-			success: function(data){
-				console.log(data);
-				$('.event-tickets').append(data);
-				flag += 6;
-				console.log(flag);
-				return false;
-			}
-		});
+		displayTickets(thecase = 'tickets', theflag = true, thelimit = true);
 	}
 
 	$('#ticketLoader').on('click', function(){
 		$(this).hide();
 		allowAutoLoad = true;
-		loadMore();
+		displayTickets( 'tickets', true, true);
 	})
 	
 	$(window).scroll(function() {
-
 		 if($(window).scrollTop() >= $(document).height() - $(window).height()) {
-
 			if(allowAutoLoad === true) {
-				loadMore();
+				displayTickets( 'tickets', true, true);
 			}
-
-
 		 }
 
 	});
 
 
-function loadMore() {
-	$.ajax({
-		type: "GET",
-		url: "/tickets/getbyeventid",
-		async: false,
-		data: {
-			'event_id' : eventid,
-			'case' : 'tickets',
-			'offset': flag,
-			'limit': 6,
-		},
-		success: function(data){
-			console.log(data);
-			$('.event-tickets').append(data);
-			flag += 6;
-			console.log(flag);
-			return false;
-		}
-	});
-}
 
 
 	// Show the loader but loading is going too fast right now..
@@ -93,7 +49,12 @@ function loadMore() {
 		if($(this).prop('checked') === true) {
 			$('#ticketLoader').hide();
 
-			showAllTickets();
+			if(allTicketsShown == 0) {
+				displayTickets('alltickets', true, undefined);
+				allTicketsShown++;
+			}
+
+				
 
 
 			simulation(eventid);
@@ -150,26 +111,6 @@ function toggleOff() {
 	$('#sim-event').bootstrapToggle('off')  
 }
 
-function showAllTickets() {
-	$.ajax({
-		type: "GET",
-		url: "/tickets/getbyeventid",
-		async: false,
-		data: {
-			'event_id' : eventid,
-			'case' : 'alltickets',
-			'offset': flag
-		},
-		success: function(data){
-			console.log(data);
-			$('.event-tickets').append(data);
-			//flag += 6;
-			console.log(flag);
-			return false;
-		}
-	});
-}
-
 // Start the event simulation
 function simulation(eventid) {
 	clearTimeout(checkSim);
@@ -189,22 +130,21 @@ function simulation(eventid) {
 			$(data).each(function(i, val){
 
 				if(this.status == 'R') {
-
-					var element = $('a[data-ticket-id="'+ this.ticket_id +'"]').detach();
-					$('.event-tickets-reserved').append(element);
+					$('a[data-ticket-id="'+ this.ticket_id +'"]').detach().appendTo('.event-tickets-reserved');
 				}
 
 				if(this.status == 'S') {
-
-					var element = $('a[data-ticket-id="'+ this.ticket_id +'"]').detach();
-					$('.event-tickets-sold').append(element);
+					$('a[data-ticket-id="'+ this.ticket_id +'"]').detach().appendTo('.event-tickets-sold');
 				}
 
-			var correct = $('a').find("[data-ticket-id='" + this.ticket_id + "']");
+				if(this.status == 'A') {
+					$('a[data-ticket-id="'+ this.ticket_id +'"]').detach().appendTo('.event-tickets');
+				}
 			});
 			
 		},
 		complete : function(data) {
+			//setTimeout(console.log('done with all'), 30000);
 			//var obj = JSON.parse(data.responseText);
 			//console.log(obj[0].ticket_id);
 			//var arr = $.map(data.responseText, function(el) { return el; })
@@ -219,7 +159,6 @@ function simulation(eventid) {
 // Stop the simulation
 function stopSimulation(eventid) {
 	clearTimeout(checkSim);
-	console.log('stopped');
 
 	$.ajax({
 		type: "GET",
@@ -260,4 +199,56 @@ function checkSimulationOnLoad(eventid) {
 		complete : function(data) {
 		}  
     });
+}
+
+function displayTickets(thecase, theflag, thelimit) {
+
+	var data = {
+		'event_id' : eventid,
+	};
+
+	if(typeof thecase !== 'undefined') {
+		data.case = thecase;
+	}
+
+	if(typeof thelimit !== 'undefined') {
+		data.limit = 6;
+	}
+
+	if(typeof theflag !== 'undefined') {
+		data.offset = flag;
+	}
+
+	$.ajax({
+		type: "GET",
+		url: "/tickets/getbyeventid",
+		async: false,
+		data: data,
+		success: function(data){
+
+			if(flag == 0) {
+				$(data + "a").each(function(i, val){
+
+					if($(this).data('status') == 'R') {
+						$('.event-tickets-reserved').append($(this));
+					}
+
+					if($(this).data('status') == 'S') {
+						$('.event-tickets-sold').append($(this));
+					}
+
+					if($(this).data('status') != 'R' && $(this).data('status') != 'S') {
+						$('.event-tickets').append($(this));
+					}
+				});
+			}else {
+				$('.event-tickets').append(data);
+			}
+
+			if(typeof theflag !== 'undefined') {
+				flag += 6;
+			}
+			return false;
+		}
+	});
 }
