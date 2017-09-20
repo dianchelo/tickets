@@ -161,15 +161,20 @@ span[rel="tag"]:hover {
 @endsection
 
 @section('bottom-container-class', 'bottom-container1')
+@if(@isset($images) && count($images) > 1)
 
 @section('instagram')
 
 <div class="row">
     <div class="col-md-2 col-md-offset-5 text-center"><h2>Hashtags</h2></div>
+    <div class="tags col-md-12 text-center">
+        @foreach($tags as $tag)
+        <span class="label label-default">{{ $tag->name }} </span>
+        @endforeach
+    </div>
 </div>
 <section id="photostack-1" class="photostack photostack-start">
                 <div>
-                @if(@isset($images))
                     @foreach($images as $image)
                         @if(@isset($image['carousel_media'])) 
                             @foreach($image['carousel_media'] as $carousel_image) {
@@ -193,7 +198,7 @@ span[rel="tag"]:hover {
                         @endif
                     @endforeach
 
-                    @endif
+                    
                     <figure data-dummy>
                         <a href="#" class="photostack-img"><img src="img/7.jpg" alt="img07"/></a>
                         <figcaption>
@@ -258,3 +263,5 @@ span[rel="tag"]:hover {
             </section>
 
 @endsection
+
+@endif

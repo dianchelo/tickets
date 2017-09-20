@@ -60,7 +60,7 @@ class LoginController extends Controller
     public function handleProviderCallback()
     {
         
-try
+        try
         {
             $socialUser = Socialite::driver('facebook')->user();
         }
@@ -75,9 +75,8 @@ try
                 'name' => $socialUser->getName(),
                 'email' => $socialUser->getEmail(),
             ]);
-
-        
+       
         Auth::login($user);
-        return redirect()->to('/events');
+        return redirect()->to('/');
     }
 }

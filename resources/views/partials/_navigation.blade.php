@@ -29,8 +29,8 @@
                 <li><a href="{{ route('register') }}">Register</a></li>
             @else
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                        {{ Auth::user()->name }} <span class="caret"></span>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="padding-top:0px;">
+                        <img src="https://graph.facebook.com/v2.10/{{ Auth::user()->facebook_id }}/picture?type=small" class="img-circle"></a><span class="caret" style="float:right;margin-top:-50%;"></span>
                     </a>
 
                     <ul class="dropdown-menu" role="menu">

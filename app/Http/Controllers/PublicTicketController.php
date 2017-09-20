@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Ticket;
+use App\Event;
 
 use App\Http\Controllers\InstagramController;
 
@@ -12,11 +13,20 @@ class PublicTicketController extends Controller
     public function getSingle($slug, $hash){
 
     	$ticket = Ticket::where('hash', $hash)->first();
-    	$images = (new InstagramController)->displayByHashtag('blijdorpfestival');
+    	$event = Event::find($ticket->event_id);
 
-    	$images = $images['items']['data'];
+    	$tags = $event->tags()->get();
 
-    	return view('tickets.single')->withTicket($ticket)->withImages($images);
+    	if(isset($tags->first()->name)) {
+    		$images = (new InstagramController)->displayByHashtag($tags->first()->name);
+    		$images = $images['items']['data'];
+    	}else{
+    		$images = "";
+    	}
+
+    	
+
+    	return view('tickets.single')->withTicket($ticket)->withImages($images)->withEvent($event)->withTags($tags);
 
 
     }

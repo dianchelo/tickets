@@ -117,4 +117,13 @@
 @section('scripts')
 {{ Html::script('js/homeHandlers.js') }}
 {{ Html::script('js/fuelux.js') }}
+
+<script type="text/javascript">
+	if (window.location.hash == '#_=_'){
+    	history.replaceState 
+        ? history.replaceState(null, null, window.location.href.split('#')[0])
+        : window.location.hash = '';
+	}
+
+</script>
 @endsection
