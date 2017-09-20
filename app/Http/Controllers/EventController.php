@@ -46,13 +46,11 @@ class EventController extends Controller
      */
     public function create()
     {
-        // TODO : Fix Request IP
+
         $ip = \Request::ip();
         $locations = Location::all();
         $categories = Category::all();
         $tags = Tag::all();
-
-        //$locations = DB::table('locations')->pluck('name')->toArray();
 
         $data = [
             'locations' => $locations,
@@ -72,8 +70,7 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request);
-        // validate stata
+
         $this->validate($request, array(
             'name' => 'required|max:255',
             'description' => 'required',
@@ -89,8 +86,7 @@ class EventController extends Controller
         
         $slug = preg_replace("/ {2,}/", " ", $request->name);
         $slug = str_replace(" ", "-", $slug);
-        $slug = strtolower($slug);
-        // Hier moet nog een preg_replace komen om alle rare tekens behalve mijn - te verwijderen 
+        $slug = strtolower($slug); 
 
         $event->slug = $slug;
         $event->description = $request->description;
@@ -99,7 +95,7 @@ class EventController extends Controller
 
         $event->event_date = $request->event_date . " " . $request->event_time;
 
-        // Location_id - nieuwe aanmaken of huidige gebruiken
+
         if($request->location_id == 'CREATE') 
         {
             $location = (new LocationController)->createLocation($request->add_location_name, 1000, $request->add_location_street, $request->add_location_streetnumber, $request->add_location_additional, $request->add_location_city, $request->add_location_zipcode, $request->add_location_country);
@@ -110,36 +106,20 @@ class EventController extends Controller
             $event->location_id = $request->location_id;
         }
 
-        
-
-        
-
         $event->amount_tickets = $request->amount_tickets;
-
-        
-
-
         $event->event_colour = $request->event_colour;
         $event->dark_event_colour = (new ColourController)->darken_colour($event->event_colour);
         $event->creator = \Request::ip();
         $event->category_id = $request->category_id;
 
-
         $event->save();
 
-        //if((strpos($request->tags_id, 'CREATE') !== false)) {
         if($request->add_tag_name !== NULL) {
-            //die('11');
             $tag = (new TagController)->createTag($request->add_tag_name);
             $event->tags()->sync($tag, false);
-        }else {
-            //die('12');
+        } else {
             $event->tags()->sync($request->tags, false);
         }
-
-        //exit;
-
-        
 
         $tickets = (new TicketController)->generate($event->amount_tickets, $event->id);
 
@@ -158,17 +138,6 @@ class EventController extends Controller
     {
         
         $event = Event::find($id);
-
-        $location = DB::table('locations')
-            ->select('locations.*')
-            ->leftJoin('events', 'events.location_id', '=', 'locations.id')
-            ->where('events.location_id', '=', $event['location_id'])
-            ->where('events.id', '=', $id)
-            ->first();
-
-            // echo '<pre>';
-            // var_dump($location);
-            // exit;
 
         $tickets = DB::table('tickets')
             ->where('tickets.event_id', '=', $id)
@@ -193,7 +162,6 @@ class EventController extends Controller
 
         $data = [
             'event' => $event,
-            'location' => $location,
             'ip' => \Request::ip(),
             'tickets' => $tickets,
             'availableTickets' => $availableTicketCount,
@@ -216,13 +184,16 @@ class EventController extends Controller
 
         $event = Event::find($id);
         $categories = Category::all();
+
         $cats = [];
-        foreach($categories as $category)
-        {
+
+        foreach($categories as $category){
             $cats[$category->id] = $category->name;
         }
+
         $tags = Tag::all();
         $tags2 = [];
+
         foreach($tags as $tag){
             $tags2[$tag->id] = $tag->name;
         }
@@ -269,10 +240,8 @@ class EventController extends Controller
             $event->tags()->sync(array());
         }
 
-        // set flash msg success
         Session::flash('success', 'This event was succesfully edited.');
 
-        // redirect with flash data
         return redirect()->route('events.show', $event->id);
     }
 
@@ -284,16 +253,10 @@ class EventController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // TODO : Delete function needs to delete all records with this event_id in other tables.
         $event = Event::find($id);
 
         $event->delete();
-
-        //DB::table('tickets')->where('event_id', '=', $id)->delete();
-        //DB::table('ticket_reservations')->where('event_id', '=', $id)->delete();
-        //$event->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
-        //$event->forceDelete();
-
 
         Session::flash('success', 'Succesfully deleted');
 
@@ -340,9 +303,7 @@ class EventController extends Controller
                 ->where('events.id', '=', $event['id'])
                 ->first();
         }
-        // echo '<pre>';
-        // var_dump($events[0]->location->name);
-        // exit;
+
         return view('events.list')->withEvents($events);
     }
 
@@ -380,13 +341,6 @@ class EventController extends Controller
 
             $allTicketsArray = $allTickets->toArray();
 
-            // echo '<pre>';
-            // var_dump($allTicketsArray);
-            // exit;
-
-
-            // ^^ Get all potentially reserved tickets - problem, we've deleted all reservations above. 
-
             $reservedTickets = array();
             $availibleTickets = array();
 
@@ -411,27 +365,8 @@ class EventController extends Controller
                 ];
             }
 
-            // foreach($insertArray as $ticket) {
-
-            //     $reservedTickets[] = [
-            //         'ticket_id' => $ticket['ticket_id'],
-            //         'event_id' => $ticket['event_id'],
-            //         'buyer_id' => $ticket['buyer_id'],
-            //         'status' => $ticket['status']
-                //];
-                //(array) $ticket['ticket_id'];
-                //var_dump($ticket['ticket_id'] );
-            //}
-            //exit;
-            //var_dump($insertArray[0]['ticket_id']);
-            //var_dump($reservedTickets);
-            //exit;
-
-
-
             DB::table('ticket_reservations')->insert($insertArray);
 
-            // Would save code to just make a variable out of the above insert but we don't need the entire array - just the id so we 'pluck' below
             $reservedTickets = DB::table('ticket_reservations')
                 ->where('event_id', '=', $id)
                 ->pluck('ticket_id')->toArray();
@@ -439,24 +374,17 @@ class EventController extends Controller
             foreach($allTickets as $ticket) {
                 $ticket_id = $ticket->id;
                 if(!in_array($ticket_id, $reservedTickets)) {
-                    //array_push($availibleTickets[]['ticket_id'], $ticket->id);
                     $availibleTickets[] = [
                     'ticket_id' => $ticket->id,
                     'status' => 'A',
                     ];
                 }
             }
-
-            //echo '<pre>';
-            //var_dump($insertArray);
             $simulatedTickets = array_merge($insertArray, $availibleTickets);
-            //exit;
 
             return $simulatedTickets;
 
         }
-        die('2');
-
     }
 
     /**
@@ -486,8 +414,7 @@ class EventController extends Controller
         if(count($eventSim) > 0) {
             if($eventSim[0]->status == 'A') {
                 // Here we're going to do put a action to get this browser paralel with the other browser which started the simulation
-                var_dump($eventSim[0]->status);
-                exit;
+
             }elseif($eventSim[0]->status == 'N') {
                 // The simulation is not running (yet)
                 return false;
@@ -505,7 +432,6 @@ class EventController extends Controller
 
     public function checkSimulationOnLoad() {
 
-
         if(isset($_GET['event_id'])) { 
             $id = $_GET['event_id'];
 
@@ -515,7 +441,6 @@ class EventController extends Controller
         }
 
         //return $eventSim[0]->status;
-
     }
 
     public function displayTicket($id, $hash) {
@@ -548,8 +473,6 @@ class EventController extends Controller
             foreach($eventList as $eventItem) {
                 echo '<li><a href="events/'. $eventItem->id .'" class="list-group-item">' . $eventItem->name . '</a></li>';
             }
-            // var_dump($eventList);
-            // exit;
         }
     }
 

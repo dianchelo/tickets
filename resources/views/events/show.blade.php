@@ -49,7 +49,7 @@ span[rel="tag"]:hover {
  			<span class="glyphicon glyphicon-calendar btn-lg" aria-hidden="true"></span>  {{ date('l j F, Y', strtotime($data['event']['event_date'])) }}
  		</div>
  		<div class="col-md-2 col-md-offset-0 text-center  ">
- 			 <span class="glyphicon glyphicon-map-marker btn-lg" aria-hidden="true"></span>  {{ $data['location']->name}}
+ 			 <span class="glyphicon glyphicon-map-marker btn-lg" aria-hidden="true"></span> {{ $data['event']->location->name }}
  		</div>
  	</div>
 

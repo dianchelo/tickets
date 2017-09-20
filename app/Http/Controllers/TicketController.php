@@ -117,7 +117,7 @@ class TicketController extends Controller
         //     'hash' => 'unique:hash'
         // ]);
 
-        \DB::table('tickets')->insert($ticketsToGenerate); // Eloquent
+        \DB::table('tickets')->insert($ticketsToGenerate);
 
     }
 

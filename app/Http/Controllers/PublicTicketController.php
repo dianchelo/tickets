@@ -24,10 +24,7 @@ class PublicTicketController extends Controller
     		$images = "";
     	}
 
-    	
-
     	return view('tickets.single')->withTicket($ticket)->withImages($images)->withEvent($event)->withTags($tags);
-
 
     }
 }
