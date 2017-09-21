@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Contracts\Auth\Authenticatable;
 use DB;
 
 
@@ -104,7 +107,7 @@ class TicketController extends Controller
 
             $ticketsToGenerate[$i] = [
                 'event_id' => $event_id,
-                'user_id' => 0,
+                'user_id' => Auth::user()->id,
                 'hash' => $hash,
                 'created_at' => date("Y-m-d H:i:s"),
                 'updated_at' => date("Y-m-d H:i:s"),

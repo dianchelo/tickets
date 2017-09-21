@@ -24,9 +24,7 @@
           -->
           <ul class="nav navbar-nav navbar-right">
             @if (Auth::guest())
-                <li><a href="{{ route('login.facebook') }}">Login FB</a></li>
-                <li><a href="{{ route('login') }}">Login</a></li>
-                <li><a href="{{ route('register') }}">Register</a></li>
+                <li><a href="{{ route('login.facebook') }}" style="color:#fff;"><strong>Login<strong></a></li>
             @else
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="padding-top:0px;">

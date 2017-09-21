@@ -29,7 +29,7 @@ Route::get('events/checksimulateonload', 'EventController@checkSimulationOnLoad'
 //Route::get('events/{slug}', ['as' => 'event.show', 'uses' => 'PublicEventController@getSingle'])->where('slug', '[\w\d\-\_]+');
 //Route::get('events/{event_id}/{hash}', 'EventController@displayTicket');
 Route::get('events/geteventlist', 'EventController@getEventList');
-Route::get('events/list', 'EventController@listEvents')->middleware('auth');
+Route::get('events/list', 'EventController@listEvents');
 
 Route::resource('events', 'EventController');
 

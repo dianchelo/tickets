@@ -70,7 +70,7 @@ class LoginController extends Controller
         }
         $user = User::where('facebook_id',$socialUser->getId())->first();
         if(!$user)
-            User::create([
+            $user = User::create([
                'facebook_id' => $socialUser->getId(),
                 'name' => $socialUser->getName(),
                 'email' => $socialUser->getEmail(),

@@ -141,7 +141,7 @@ span[rel="tag"]:hover {
 	<div class="row" style="margin-top:20px;">
 		<div class="col-md-3">
                   <div class="caption text-center form-spacing-top">
-                    {{ Html::image('img/thumbnail-round-black.png') }}
+                  <img src="https://graph.facebook.com/v2.10/{{ $ticket->user->facebook_id }}/picture?type=large" class="img-circle">
                     <h3>{{ $ticket->user->name }} </h3>
                 </div>
             </div>
