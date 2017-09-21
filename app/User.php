@@ -10,7 +10,6 @@ class User extends Authenticatable
     use Notifiable;
 
     protected $table = 'users';
-    protected $fillable = ['name', 'email', 'facebook_id'];
 
     /**
      * The attributes that are mass assignable.

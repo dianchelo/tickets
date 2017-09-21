@@ -14,7 +14,8 @@ class EventTableSeeder extends Seeder
         $event = new \App\Event([
         	'name' => 'Latin Village', 
         	'slug' => 'latin-village', 
-        	'category_id' => '1', 
+        	'category_id' => '1',
+            'amount_tickets' => '50',  
         	'hash' => hash('ripemd160', preg_replace('/[^A-Za-z0-9\-]/', '', 'latin-village')), 
         	'description' => '
 Met meer dan 11 prachtige stages varierend van Salsa, Kizomba, Latinhouse, Moombathon, eclectic beats en te gekke live optredens van grote Latin artiesten wordt dit een editie om niet te vergeten!
@@ -36,6 +37,7 @@ LatinVillage Family',
         	'name' => 'Tomorrowland', 
         	'slug' => 'tomorrowland', 
         	'category_id' => '2', 
+            'amount_tickets' => '50',  
         	'hash' => hash('ripemd160', preg_replace('/[^A-Za-z0-9\-]/', '', 'tomorrowland')), 
         	'description' => 'The dates of TomorrowLand 2017 run from Friday, July 21th through Sunday, July 30th in Boom, Belgium. The event includes the most impressive lineup of electronic music acts performing on 15 stages.
 
@@ -60,6 +62,7 @@ The number of people attending TomorrowLand has increased from 50,000+ to over 4
         	'name' => 'Soranje', 
         	'slug' => 's-oranje', 
         	'category_id' => '3', 
+            'amount_tickets' => '50',  
         	'hash' => hash('ripemd160', preg_replace('/[^A-Za-z0-9\-]/', '', 's-oranje')), 
         	'description' => '☆☆☆ S\'ORANJE \'KINGSDAY\' FESTIVAL 2017 ☆☆☆
 
@@ -85,6 +88,7 @@ Locatie: PLEIN 1940, Rotterdam',
         	'name' => 'Encore Festival', 
         	'slug' => 'encore-festival', 
         	'category_id' => '4', 
+            'amount_tickets' => '50',  
         	'hash' => hash('ripemd160', preg_replace('/[^A-Za-z0-9\-]/', '', 'encore-festival')), 
         	'description' => 'After 3 sold-out editions, Encore is back on the NDSM-warf in Amsterdam! 4 stages with : Migos, Tory Lanez, Maleek Berry, Jonna Fraser and many more.', 
         	'event_date' => '2020-10-28 13:00:00', 
@@ -99,6 +103,7 @@ Locatie: PLEIN 1940, Rotterdam',
         	'name' => 'WooHah', 
         	'slug' => 'woohah', 
         	'category_id' => '5', 
+            'amount_tickets' => '50',  
         	'hash' => hash('ripemd160', preg_replace('/[^A-Za-z0-9\-]/', '', 'woohah')), 
         	'description' => 'WOO HAH! We back! This year WOO HAH! takes place on Friday June 30 and Saturday July 1. On both days the festival will start at 13.30 and end at 01.00. 
 
