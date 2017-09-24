@@ -67,6 +67,14 @@ Route::resource('tags', 'TagController', ['except' => ['create']]);
 
 Route::get('instagram/{hashtag}', 'InstagramController@displayByHashtag');
 
+// Cart
+
+Route::resource('/cart', 'CartController', ['only' => ['index', 'store', 'update', 'destroy']]);
+
+Route::get('/add-to-cart/{id}', [
+    'uses' => 'PublicTicketController@getAddToCart',
+    'as' => 'product.addToCart']);
+
 /////////////////////// Checkout
 
 Route::get('/{order?}', [

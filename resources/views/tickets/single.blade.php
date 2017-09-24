@@ -152,7 +152,22 @@ span[rel="tag"]:hover {
 
             <div class="col-md-10 col-md-offset-1 form-spacing-top">
                 <div class="jumbotron jumbotron-fluid">
-                    <a href="/order/1"  class="btn custom-bg btn-block">Nu kopen</a>
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-6" style="text-align:right;"><h3>€{{ $ticket->price }}</h3></div>
+                    </div>
+
+                    <form action="/cart" method="POST">
+                      {!! csrf_field() !!}
+                      <input type="hidden" name="id" value="{{ $ticket->id }}">
+                      <input type="hidden" name="name" value="{{ $ticket->event->name }}">
+                      <input type="hidden" name="price" value="{{ $ticket->price }}">
+                      <input type="submit" class="btn btn-lg custom-bg btn-block" value="Nu kopen">
+                    </form>
+
+                    <div class="row">
+                        <div class="col-md-12 "><h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vitae leo vehicula, varius est ut, aliquam purus. Ut eget vulputate purus. Class aptent taciti sociosqu ad litora torquent per conubia nostra</h5></div>
+                    </div>
+
                 </div>
             </div>  
         </div>
@@ -160,8 +175,10 @@ span[rel="tag"]:hover {
 
 @endsection
 
+@if(@isset($images) && count($images) > 0)
+
 @section('bottom-container-class', 'bottom-container1')
-@if(@isset($images) && count($images) > 1)
+
 
 @section('instagram')
 
@@ -263,5 +280,4 @@ span[rel="tag"]:hover {
             </section>
 
 @endsection
-
 @endif

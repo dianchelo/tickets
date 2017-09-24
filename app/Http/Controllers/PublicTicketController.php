@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Ticket;
 use App\Event;
+use \Cart as Cart;
 
 use App\Http\Controllers\InstagramController;
 
@@ -25,6 +26,13 @@ class PublicTicketController extends Controller
     	}
 
     	return view('tickets.single')->withTicket($ticket)->withImages($images)->withEvent($event)->withTags($tags);
+
+    }
+
+    public function getAddToCart(Request $request, $id){
+        $ticket = Ticket::find($id);
+
+        dd(Cart::content());
 
     }
 }

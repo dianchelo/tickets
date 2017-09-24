@@ -180,6 +180,8 @@ return [
         /* Zelf toegevoegd */
         Collective\Html\HtmlServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
+        Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
+        Mollie\Laravel\MollieServiceProvider::class,
 
     ],
 
@@ -234,6 +236,8 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
+        'Mollie' => Mollie\Laravel\Facades\Mollie::class,
 
     ],
 

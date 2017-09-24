@@ -32,6 +32,9 @@
                     </a>
 
                     <ul class="dropdown-menu" role="menu">
+                        @if(Cart::count() > 0)
+                        <li><a href="/cart">View Cart</a></li>
+                        @endif
                         <li><a href="">My tickets for sale</a></li>
                         <li><a href="">Purchased tickets</a></li>
                         <li><a href="{{ route('categories.index') }}">Categories</a></li>

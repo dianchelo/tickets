@@ -15,6 +15,13 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+
+        Socialite::extend('mollie', function ($app) {
+            $config = $app['config']['services.mollie'];
+
+            return Socialite::buildProvider('Mollie\Laravel\MollieConnectProvider', $config);
+        });
+
     }
 
     /**
