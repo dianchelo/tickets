@@ -149,36 +149,58 @@ span[rel="tag"]:hover {
 		<div class="col-md-9">
 
             <i>{{ $ticket->event->description }}</i>
-
+            @if($ticket->status == 'A')
             <div class="col-md-10 col-md-offset-1 form-spacing-top">
                 <div class="jumbotron jumbotron-fluid">
-                    <div class="row">
-                        <div class="col-md-6 col-md-offset-6" style="text-align:right;"><h3>€{{ $ticket->price }}</h3></div>
-                    </div>
 
-                    <form action="/cart" method="POST">
-                      {!! csrf_field() !!}
-                      <input type="hidden" name="id" value="{{ $ticket->id }}">
-                      <input type="hidden" name="name" value="{{ $ticket->event->name }}">
-                      <input type="hidden" name="price" value="{{ $ticket->price }}">
-                      <input type="submit" class="btn btn-lg custom-bg btn-block" value="Nu kopen">
-                    </form>
+                    
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-6" style="text-align:right;"><h3>€{{ $ticket->price }}</h3></div>
+                        </div>
 
-                    <div class="row">
-                        <div class="col-md-12 "><h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vitae leo vehicula, varius est ut, aliquam purus. Ut eget vulputate purus. Class aptent taciti sociosqu ad litora torquent per conubia nostra</h5></div>
-                    </div>
+                        
+
+                        <form action="/cart" method="POST">
+                          {!! csrf_field() !!}
+                          <input type="hidden" name="id" value="{{ $ticket->id }}">
+                          <input type="hidden" name="name" value="{{ $ticket->event->name }}">
+                          <input type="hidden" name="price" value="{{ $ticket->price }}">
+                          <input type="submit" class="btn btn-lg custom-bg btn-block" value="Nu kopen">
+                        </form>
+
+                        <div class="row">
+                            <div class="col-md-12 "><h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vitae leo vehicula, varius est ut, aliquam purus. Ut eget vulputate purus. Class aptent taciti sociosqu ad litora torquent per conubia nostra</h5></div>
+                        </div>
+
+
+
+
 
                 </div>
             </div>  
+
+            @elseif($ticket->status == 'R')
+                <div class="row">
+                <h1>Tickets are already in someone's cart</h1>
+
+                <h4>This means the tickets will probably be sold. If they do not, they'll come back up for sale</h4>
+                </div>
+
+            @elseif($ticket->status == 'S')    
+
+                <div class="row text-center" style="border:1px solid red; border-radius:10px; height: 50px; padding:10px; background-color:pink;">
+                    <h5>This ticket is not availible anymore.</h5>
+                </div>
+
+            @endif
         </div>
 	</div>
 
 @endsection
 
-@if(@isset($images) && count($images) > 0)
+@if(@isset($images) && count($images) > 0 && $images != "")
 
 @section('bottom-container-class', 'bottom-container1')
-
 
 @section('instagram')
 
@@ -190,8 +212,10 @@ span[rel="tag"]:hover {
         @endforeach
     </div>
 </div>
+
 <section id="photostack-1" class="photostack photostack-start">
                 <div>
+                
                     @foreach($images as $image)
                         @if(@isset($image['carousel_media'])) 
                             @foreach($image['carousel_media'] as $carousel_image) {
@@ -214,6 +238,7 @@ span[rel="tag"]:hover {
                         
                         @endif
                     @endforeach
+
 
                     
                     <figure data-dummy>
@@ -276,8 +301,12 @@ span[rel="tag"]:hover {
                             <h2 class="photostack-title">Lightness</h2>
                         </figcaption>
                     </figure>
+
+                
                 </div>
             </section>
 
+
 @endsection
+
 @endif

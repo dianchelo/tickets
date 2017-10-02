@@ -1,78 +1,73 @@
 @extends('main')
 
-@section('topclass', 'event-bg')
+@section('topclass', 'small-bg')
 
- @section('topcontainer')
-
- 	<div class="">
- 		<div class="col-md-6 col-md-offset-3 text-center">
- 			<h1 class="t-white">Cart</h1>
- 		</div>
- 	</div>
-
-@endsection
 
 @section('content')
+	@if(count($tickets) >= 1 && count($tickets) != null)
 
-	@if(Cart::count() > 0)
-
-	<div class="row" style="border:2px solid #ccc; margin-top:20px; margin-bottom:20px; border-radius:20px;">
+	<div class="row" style="margin-top:20px;">
 		<div class="col-md-12">
-			<div class="row">
-				<div class="col-md-12">
-					<h2>Cart</h2>
+			<div class="well">
+				<div class="row">
+					<div class="col-md-12">
+						<h2>Cart</h2>
+					</div>
 				</div>
-			</div>
-			<hr>
+				<hr>
 
 
-			<table class="table table-hover" style="padding:0px;">
-			    <thead>
-			      <tr>
-			        <th width="80%">Event</th>
-			        <th></th>
-			        <th style="text-align:right;">Price</th>
-			      </tr>
-			    </thead>
-			    <tbody>
-			     	@foreach(Cart::content() as $row)
-			     		<tr>
-							<td>
-								<strong><a href="/events/{{$row->model->event->id}}/{{$row->model->hash}}">{{ $row->qty }}x {{ $row->name }}</a></strong><br>
-								<strong>{{ date('l j F, Y', strtotime($row->model->event->event_date)) }}, {{ $row->model->event->location->name }},  {{ $row->model->event->location->city }},  {{ $row->model->event->location->country }}</strong>
-							</td>
-							<td style="text-align:right;">
+				<table class="table table-hover" style="padding:0px;">
+				    <thead>
+				      <tr>
+				        <th width="70%">Event</th>
+				        <th>Reserved Till</th>
+				        <th></th>
+				        <th style="text-align:right;">Price</th>
+				      </tr>
+				    </thead>
+				    <tbody>
+				     	@foreach($tickets as $ticket)
+				     		<tr>
+								<td>
+									<strong><a href="/events/{{$ticket->model->event->id}}/{{$ticket->model->hash}}">{{ $ticket->qty }}x {{ $ticket->name }}</a></strong><br>
+									<strong>{{ date('l j F, Y', strtotime($ticket->model->event->event_date)) }}, {{ $ticket->model->event->location->name }},  {{ $ticket->model->event->location->city }},  {{ $ticket->model->event->location->country }}</strong>
+								</td>
+								<td>{{ $ticket->ticket->reservation->reserved_till }}</td>
+								<td style="text-align:right;">
 
 
-								<form action="{{ route('cart.destroy', $row->id) }}" method="POST">
-								    {{ method_field('DELETE') }}
-								    {{ csrf_field() }}
-								    <button><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-								</form>
+									<form action="{{ route('cart.destroy', $ticket->id) }}" method="POST">
+									    {{ method_field('DELETE') }}
+									    {{ csrf_field() }}
+									    <button><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+									</form>
 
 
 
-							</td>
-			        		<td style="text-align:right;">{{ $row->total }}</td>
-			        	</tr>	
-					@endforeach
+								</td>
+				        		<td style="text-align:right;">€{{ $ticket->total }}</td>
+				        	</tr>	
+						@endforeach
 
-					<tr>
-						<td colspan="2" style="text-align:right;"><strong>Totaal</strong></td>
-						<td  style="text-align:right;">{{ Cart::total() }}</td>
-					</tr>
-			    </tbody>
-      		</table>
+						<tr>
+							<td colspan="3" style="text-align:right;"><strong>Totaal</strong></td>
+							<td  style="text-align:right;">€{{ Cart::total() }}</td>
+						</tr>
+				    </tbody>
+	      		</table>
 
-      		
+      		</div>
 		</div>
 	</div>
 
 	<div class="row">
-      			<div class="col-md-12">
-      				<button type="button" class="btn btn-gold btn-lg btn-block" style="margin-bottom:20px;">Buy now</button>
-      			</div>
-      		</div>
+		<div class="col-md-12">
+			<a href="{{route('cart.checkout')}}" class="btn btn-gold btn-lg btn-block" style="margin-bottom:20px;">
+		        <i class="fa fa-cog" aria-hidden="true"></i> Buy now
+		    </a>
+		</div>
+	</div>
 
 	@else
 
@@ -86,5 +81,10 @@
 
 
 	@endif
+
+@endsection
+
+@section('scripts')
+
 
 @endsection

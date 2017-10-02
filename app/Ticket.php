@@ -18,4 +18,9 @@ class Ticket extends Model
    	{
    		return $this->hasOne('App\User', 'id', 'user_id');
    	}
+
+    public function reservation()
+    {
+      return $this->BelongsTo('App\Reservation', 'id', 'ticket_id');
+    }
 }

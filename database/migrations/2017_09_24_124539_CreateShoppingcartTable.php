@@ -15,7 +15,7 @@ class CreateShoppingcartTable extends Migration
             $table->string('identifier');
             $table->string('instance');
             $table->longText('content');
-            $table->nullableTimestamps();
+            $table->timestamps();
 
             $table->primary(['identifier', 'instance']);
         });
@@ -25,6 +25,6 @@ class CreateShoppingcartTable extends Migration
      */
     public function down()
     {
-        Schema::drop(config('shoppingcart'));
+        Schema::dropIfExists('shoppingcart');
     }
 }

@@ -36,9 +36,15 @@ return [
     ],
 
     'facebook' => [
-    'client_id' => '278686865972710',
-    'client_secret' => 'f5aecedcbe53d02fb96584ea4bb8a932',
-    'redirect' => 'http://localhost:8000/login/facebook/callback',
-],
+        'client_id' => '278686865972710',
+        'client_secret' => 'f5aecedcbe53d02fb96584ea4bb8a932',
+        'redirect' => 'http://localhost:8000/login/facebook/callback',
+    ],
+
+    // 'mollie' => [
+    //     'client_id' => env('MOLLIE_CLIENT_ID', 'app_xxx'),
+    //     'client_secret' => env('MOLLIE_CLIENT_SECRET'),
+    //     'redirect' => env('MOLLIE_REDIRECT_URI'),
+    // ],
 
 ];

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Ticket;
 use App\Event;
 use \Cart as Cart;
+use DB;
 
 use App\Http\Controllers\InstagramController;
 
@@ -14,6 +15,13 @@ class PublicTicketController extends Controller
     public function getSingle($slug, $hash){
 
     	$ticket = Ticket::where('hash', $hash)->first();
+
+        if(!isset($ticket->reservation->status)){ 
+            $ticket->status = 'A';
+        }else{
+            $ticket->status = $ticket->reservation->status;
+        }
+
     	$event = Event::find($ticket->event_id);
 
     	$tags = $event->tags()->get();

@@ -6,21 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-     /**
-     * @var string
-     */
-    protected $table = 'orders';
-
-    /**
-     * @var array
-     */
-    protected $dates = ['deleted_at'];
-
-    /**
-     * @var array
-     */
-    protected $fillable = ['transaction_id', 'amount', 'payment_status'];
+    public function user(){ 
+        return $this->belongsTo('App\User', 'user_id', 'id');
+    }
 }
-
-
-	

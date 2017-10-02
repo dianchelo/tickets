@@ -58,7 +58,7 @@ span[rel="tag"]:hover {
 
 @section('content')
 
-	<div id="settings" class="row" style="margin-top:20px; display:;" >
+	<div id="settings" class="row" style="margin-top:20px; display:none;" >
 		<div class="col-md-12">
 			<div class="well">
 

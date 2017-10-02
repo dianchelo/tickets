@@ -170,7 +170,7 @@ class TicketController extends Controller
         return;
     }
 
-    function getTicketsById($event_id){
+    public function getTicketsById($event_id){
         $data = [];
         $availbleTickets = 0;
 
@@ -195,6 +195,11 @@ class TicketController extends Controller
         ];
 
         return $data;
+    }
+
+    public function changeStatus($id, $status) {
+
+        
     }
 
 

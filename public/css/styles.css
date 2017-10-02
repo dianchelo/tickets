@@ -37,6 +37,14 @@ body, html {
 
 }
 
+.small-bg{
+   background-image: url('../img/event-bg-gray20.png');
+    height: 85px; 
+    background-position: center;
+    background-repeat:repeat;
+    border-bottom:1px solid #077260;
+
+}
 .navbar-default{
   background:transparent;
   background-image:none;
