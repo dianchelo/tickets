@@ -3,6 +3,10 @@ body, html {
     padding: 0px!important;
 }
 
+body{
+  background-color: #f2f2f2;
+}
+
 .btn-h1-spacing {
 	margin-top:18px;
 }
@@ -115,6 +119,15 @@ h6 {
   background-color:#f7c8ae;
 }
 
+
+.btn-gray{
+  color:#fff!important;
+  background-color:#b0b0b0;
+}
+
+.btn-gray:hover, .btn-gray:focus, .btn-gray:active{
+  background-color:#707070!important;
+}
 .btn-green {
     background: #4d8e88;
     color: #ffffff!important;
@@ -173,6 +186,10 @@ h6 {
   margin-top:30px;
 }
 
+.top-30{
+  margin-top:30px;
+}
+
 #event-list-table{
   border:0px solid #fff;
 }
@@ -207,4 +224,18 @@ h6 {
 .navbar-default .navbar-nav>li {
   margin-right:10px;
   padding:0px;
+}
+
+.search-item{
+  background-color:#f7c8ae;
+  margin-bottom:10px;
+}
+
+.search-item:hover{
+  background-color:#fbdac8;
+}
+
+.selected-event{
+  background-color:#c6977d;
+  margin-bottom:20px;
 }

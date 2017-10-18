@@ -476,6 +476,29 @@ class EventController extends Controller
         }
     }
 
+    public function getEventData() {
+        if(isset($_GET['searchKey']) && isset($_GET['limit'])) {
+            $searchKey = $_GET['searchKey'];
+            $limit = $_GET['limit'];
+
+            $eventList = DB::table('events')
+                ->where('name', 'like', '%'.$searchKey.'%')
+                ->limit($limit)
+                ->get();
+
+
+            // Ugly solution - Shouldn't do this, just return the data and render view again..
+            foreach($eventList as $eventItem) {
+                $result = '<div data-event-id="'. $eventItem->id .'" class="col-md-12 search-item">';
+                $result .= '<h4>'. $eventItem->name .'</h4>';
+                $result .= '<h6>'. date('l j F, Y', strtotime($eventItem->event_date)) .'</h6>';
+                $result .= '</div>';
+
+                echo $result;
+            }
+        }
+    }
+
     public function getSingle($slug) {
        return  $slug;
     }

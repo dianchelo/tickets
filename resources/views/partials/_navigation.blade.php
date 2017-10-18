@@ -29,16 +29,14 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="padding-top:0px;">
                         <img src="https://graph.facebook.com/v2.10/{{ Auth::user()->facebook_id }}/picture?type=small" class="img-circle"></a><span class="caret" style="float:right;margin-top:-50%;"></span>
-                    </a>
 
                     <ul class="dropdown-menu" role="menu">
                         @if(Cart::count() > 0)
                         <li><a href="/cart">View Cart</a></li>
                         @endif
-                        <li><a href="">My tickets for sale</a></li>
-                        <li><a href="">Purchased tickets</a></li>
-                        <li><a href="{{ route('categories.index') }}">Categories</a></li>
-                        <li><a href="{{ route('tags.index') }}">Tags</a></li>
+                        <li><a href="#">My tickets for sale</a></li>
+                        <li><a href="#">Purchased tickets</a></li>
+                        
                         <li>
                             <a href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
@@ -52,8 +50,18 @@
                         </li>
                     </ul>
                 </li>
-                <li><a href="/events/create" class="btn btn-green btn-lg" role="button">Create Event</a></li>
-                <li><a href="/tickets/create" class="btn btn-gold btn-lg" role="button">Sell tickets</a></li>
+                <li><a href="/tickets/sell" class="btn btn-gold btn-lg" role="button">Sell tickets</a></li>
+                <li class="dropdown">
+
+                    <a href="#" class="dropdown-toggle btn btn-gray btn-lg" data-toggle="dropdown" role="button" aria-expanded="false" >Admin Tools</a>
+                        
+
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="/events/create">Create Events</a></li>
+                            <li><a href="{{ route('categories.index') }}">View/Create Categories</a></li>
+                            <li><a href="{{ route('tags.index') }}">View/Create Tags</a></li>
+                        </ul>
+                </li>
             @endif
           </ul>
         </div>

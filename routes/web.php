@@ -28,6 +28,7 @@ Route::get('events/stopsimulate', 'EventController@stopEventSimulation');
 Route::get('events/checksimulateonload', 'EventController@checkSimulationOnLoad');
 //Route::get('events/{slug}', ['as' => 'event.show', 'uses' => 'PublicEventController@getSingle'])->where('slug', '[\w\d\-\_]+');
 Route::get('events/geteventlist', 'EventController@getEventList');
+Route::get('events/geteventdata', 'EventController@getEventData');
 Route::get('events/list', 'EventController@listEvents');
 
 Route::resource('events', 'EventController');
@@ -37,6 +38,9 @@ Route::resource('events', 'EventController');
 // Ticket pages
 Route::get('tickets/getbyeventid', 'TicketController@getTicketsByEventId');
 Route::get('events/{slug}/{hash}', 'PublicTicketController@getSingle');
+Route::get('tickets/sell', 'PublicTicketController@sellTicket');
+Route::post('tickets/userstore',  ['as' => 'tickets.userstore', 'uses' => 'PublicTicketController@storeTicket']);
+//Route::get('tickets/sell/{id}', 'PublicTicketController@storeTicket');
 
 // Login pages
 Route::get('login/facebook',  ['as' => 'login.facebook', 'uses' => 'Auth\LoginController@redirectToProvider']);
