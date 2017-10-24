@@ -84,23 +84,6 @@ class orderController extends Controller
     }
 
     public function showStatus(){
-
-        echo '<pre>';
-        
-        
-        //var_dump($payment);
-        exit;
-
-        if ($payment->isPaid())
-            {
-                die('1');
-            }
-            elseif (! $payment->isOpen())
-            {
-                die('2');
-            }
-
-
-
+        //
     }
 }

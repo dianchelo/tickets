@@ -103,8 +103,6 @@ class TicketController extends Controller
             $hash = random_bytes(10);
             $hash = hash('ripemd160', $hash);
 
-            //echo $i . " " . $hash ."<br>";
-
             $ticketsToGenerate[$i] = [
                 'event_id' => $event_id,
                 'user_id' => Auth::user()->id,
@@ -114,11 +112,6 @@ class TicketController extends Controller
             ];
 
         }
-
-        // TODO validation
-        // $this->validate($request, [
-        //     'hash' => 'unique:hash'
-        // ]);
 
         \DB::table('tickets')->insert($ticketsToGenerate);
 
@@ -160,7 +153,6 @@ class TicketController extends Controller
 
 
         foreach($tickets  as $ticket) {
-            // TODO : Assign status to the availible tickets
             // Facing problems with usort multidimensional []
             echo '<a href="/events/'. $event_id .'/'. $ticket->hash .'" class="list-group-item" data-ticket-id="'.$ticket->tid.'" '.((isset($ticket->status))?'data-status="'.$ticket->status.'"':"").'>'; 
             echo '<h5><span rel="tag">1</span>'. $ticket->tid. ' </h5>';

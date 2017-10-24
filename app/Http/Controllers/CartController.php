@@ -28,11 +28,6 @@ class CartController extends Controller
     {
         // This function will run on it's continuesly on the live server, now we'll do it upon pageload.
         //$this->checkAllTicketsAndCarts();
-        // The cart can be updated in the background so we restore the cart from the DB.
-        //Cart::restore(Auth::user()->facebook_id);
-
-        // The restore function deletes the cart from the DB so we'll have to save it back again.
-        //Cart::store(Auth::user()->facebook_id);
 
         $tickets = [];
 
@@ -204,7 +199,7 @@ class CartController extends Controller
 
     }
 
-    // Temporary function
+    // This function needs to be autoloaded each 5 seconds on a server
     public function checkAllTicketsAndCarts(){
         date_default_timezone_set("Europe/Amsterdam");
 
@@ -217,8 +212,6 @@ class CartController extends Controller
                 $reservationExpiration = strtotime($ticket->reservation->created_at->toDateTimeString() . ' +10 seconds');
                 if ($now >= $reservationExpiration ) {
                     $reservation = Reservation::where('ticket_id', $ticket->id)->first();
-                    // status below needs to be 'A'
-                    //$reservation->update(['status' => 'R']);
 
                     $cartContent = Cart::restoreFromDB($reservation->buyer_id);
 

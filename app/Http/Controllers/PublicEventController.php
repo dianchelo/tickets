@@ -9,9 +9,7 @@ class PublicEventController extends Controller
 {
     //
     public function getSingle($slug) {
-
-    	//die('1');
-
+    	
     	$event = Event::where('slug', '=', $slug)->first();
 
     	return view('events.show')->withEvent($event);
