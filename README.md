@@ -12,7 +12,7 @@ Shortcut to some Templating: https://github.com/dianchelo/tickets/blob/master/re
 Shortcut to some Javascript/JQuery: https://github.com/dianchelo/tickets/blob/master/public/js/eventHandlers.js
 
 
-Things is progress : 
+Things is progress : 	
 
 - Add price when creating a event and generating tickets
 - Remove unneccessary url add-ons when login in using FB
