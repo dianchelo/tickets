@@ -10,26 +10,21 @@
 		<div class="col-md-8 col-md-offset-2 " style="background-color:;">
 			<div class="row">
 				<div class="col-md-4" style="background-color:; padding-left:50px;"> 
-					<h1 class="text-center">Menu</h1> 
+					<h3 class="">Menu</h3> 
 					<h4>
-						<a>Home</a><br>
-						<a>Hoe werkt het?</a><br>
-						<a>Lorem</a><br>
-						<a>Ipsum</a><br>
-						<a>Dolor</a><br>
-						<a>Sit Amet</a><br>
+						<a href="/">Home</a><br>
 					</h4>
 				</div>
 				<div class="col-md-4" style="background-color:; padding-left:50px;"> 
-					<h1 class="text-center">Lorem</h1>  
+					<h3 class="">Social</h3>  
 					<h4>
-						<a>Bazaar</a><br>
+						<a href="https://www.instagram.com/dianchelodeveloper/"><i class="fa fa-instagram" aria-hidden="true"></i> Instagram</a><br>
 					</h4>
 				</div>
 				<div class="col-md-4" style="background-color:; padding-left:50px;"> 
-					<h1 class="text-center">Ipsum</h1> 
+					<h3 class="">Ipsum</h3> 
 					<h4>
-						<a>Notre</a><br>
+						<a>Contact</a><br>
 					</h4>
 				</div>
 			</div>
