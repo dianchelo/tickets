@@ -184,11 +184,26 @@ class CartController extends Controller
     }
 
     public function orderAfterCheckout($id) {
+
         $order = Order::find($id);
         $cart = unserialize($order->cart);
+        $ticket_status = '';
+
         $payment = Mollie::api()->payments()->get($order->payment_id);
 
         DB::table('orders')->where('id', $order->id)->update(['payment_status' => $payment->status]);
+
+        if($payment->status == 'paid'){
+            $ticket_status = 'S';
+        }elseif($payment->status != 'paid'){
+            // If payment status is something else than paid, make tickets availible again
+            $ticket_status = 'A';
+        }
+
+
+        foreach($cart as $key => $ticket) {
+            DB::table('ticket_reservations')->where('ticket_id', $ticket->id)->update(['status' => $ticket_status]);
+        }
 
         return view('orders.postcheckout')->withOrder($order)->withPayment($payment)->withCart($cart);
     }   
