@@ -37,8 +37,8 @@ Route::resource('events', 'EventController');
 
 // Ticket pages
 Route::get('tickets/getbyeventid', 'TicketController@getTicketsByEventId');
-Route::get('events/{slug}/{hash}', 'PublicTicketController@getSingle');
-Route::get('tickets/sell', 'PublicTicketController@sellTicket');
+Route::get('events/{slug}/{hash}', ['as' => 'ticket.single', 'uses' => 'PublicTicketController@getSingle']);
+Route::get('tickets/sell', ['as' => 'tickets.sell', 'uses' => 'PublicTicketController@sellTicket']);
 Route::post('tickets/userstore',  ['as' => 'tickets.userstore', 'uses' => 'PublicTicketController@storeTicket']);
 //Route::get('tickets/sell/{id}', 'PublicTicketController@storeTicket');
 
@@ -63,12 +63,9 @@ Route::get('instagram/{hashtag}', 'InstagramController@displayByHashtag');
 // Cart
 Route::get('/checkout', ['as' => 'cart.checkout', 'uses'=> 'CartController@checkout']);
 
-
 Route::resource('/cart', 'CartController', ['only' => ['index', 'store', 'update', 'destroy']]);
 
-Route::get('/add-to-cart/{id}', [
-    'uses' => 'PublicTicketController@getAddToCart',
-    'as' => 'product.addToCart']);
+Route::get('/add-to-cart/{id}', ['uses' => 'PublicTicketController@getAddToCart', 'as' => 'product.addToCart']);
 
 
 // Orders

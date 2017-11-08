@@ -30,7 +30,7 @@
 				     	@foreach($tickets as $ticket)
 				     		<tr>
 								<td>
-									<strong><a href="/events/{{$ticket->model->event->id}}/{{$ticket->model->hash}}">{{ $ticket->qty }}x {{ $ticket->name }}</a></strong><br>
+									<strong><a href="{{route('ticket.single', ['slug' => $ticket->model->event->id, 'hash' => $ticket->model->hash], false) }}">{{ $ticket->qty }}x {{ $ticket->name }}</a></strong><br>
 									<strong>{{ date('l j F, Y', strtotime($ticket->model->event->event_date)) }}, {{ $ticket->model->event->location->name }},  {{ $ticket->model->event->location->city }},  {{ $ticket->model->event->location->country }}</strong>
 								</td>
 								<td>{{ $ticket->ticket->reservation->reserved_till }}</td>

@@ -64,7 +64,7 @@
 
  		@foreach($events as $key => $event)
  			@if($key <= 2)
- 			<a href="/events/{{$event->id}}" >
+ 			<a href="{{route('events.show', ['id' => $event->id], false) }}" >
  			<div class="col-sm-6 col-md-4">
 			    <div class="thumbnail @if($key == '0') b-green @elseif($key == '1') b-pink @elseif($key == '2') b-gold @endif ">
 			      <div class="caption text-center">
@@ -78,7 +78,7 @@
 			</a>
 			@endif
 			@if($key == 3 || $key == 4)
- 			<a href="/events/{{$event->id}}" >
+ 			<a href="{{route('events.show', ['id' => $event->id], false) }}" >
  			<div class="col-sm-6 col-md-6">
 			    <div class="thumbnail @if($key == '3') b-green @elseif($key == '4') b-pink @endif ">
 			      <div class="caption text-center">
@@ -92,7 +92,7 @@
 			</a>
 			@endif
 			@if($key >= 5)
- 			<a href="/events/{{$event->id}}" >
+ 			<a href="{{route('events.show', ['id' => $event->id], false) }}" >
  			<div class="col-sm-6 col-md-4">
 			    <div class="thumbnail @if($key == '7') b-green @elseif($key == '6') b-pink @elseif($key == '5') b-gold @endif ">
 			      <div class="caption text-center">

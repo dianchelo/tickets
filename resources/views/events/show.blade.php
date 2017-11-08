@@ -58,13 +58,13 @@ span[rel="tag"]:hover {
 
 @section('content')
 
-	<div id="settings" class="row" style="margin-top:20px; display:none;" >
+	<div id="settings" class="row" style="margin-top:20px; display:block;" >
 		<div class="col-md-12">
 			<div class="well">
 
 				<dl class="dl-horizontal">
 					<dt>url:</dt>
-					<dd><a href="{{ URL::to('events/' . $data['event']->id) }}"> {{ URL::to('events/' . $data['event']->slug) }}</a></dd>
+					<dd><a href="{{route('events.show', ['id' => $data['event']->id], false) }}"> {{ URL::to('events/' . $data['event']->slug) }}</a></dd>
 				</dl>
 
 				<dl class="dl-horizontal">

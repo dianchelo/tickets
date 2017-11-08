@@ -154,7 +154,7 @@ class TicketController extends Controller
 
         foreach($tickets  as $ticket) {
             // Facing problems with usort multidimensional []
-            echo '<a href="/events/'. $event_id .'/'. $ticket->hash .'" class="list-group-item" data-ticket-id="'.$ticket->tid.'" '.((isset($ticket->status))?'data-status="'.$ticket->status.'"':"").'>'; 
+            echo '<a href="'. route('ticket.single', ['slug' => $event_id, 'hash' => $ticket->hash]), false .'" class="list-group-item" data-ticket-id="'.$ticket->tid.'" '.((isset($ticket->status))?'data-status="'.$ticket->status.'"':"").'>'; 
             echo '<h5><span rel="tag">1</span>'. $ticket->tid. ' </h5>';
             echo '</a>';
         }

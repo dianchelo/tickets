@@ -32,7 +32,7 @@
 
                     <ul class="dropdown-menu" role="menu">
                         @if(Cart::count() > 0)
-                        <li><a href="/cart">View Cart</a></li>
+                        <li><a href="{{ route('cart.index') }}">View Cart</a></li>
                         @endif
                         <li><a href="#">My tickets for sale</a></li>
                         <li><a href="#">Purchased tickets</a></li>
@@ -50,14 +50,14 @@
                         </li>
                     </ul>
                 </li>
-                <li><a href="/tickets/sell" class="btn btn-gold btn-lg" role="button">Sell tickets</a></li>
+                <li><a href="{{ route('tickets.sell') }}" class="btn btn-gold btn-lg" role="button">Sell tickets</a></li>
                 <li class="dropdown">
 
                     <a href="#" class="dropdown-toggle btn btn-gray btn-lg" data-toggle="dropdown" role="button" aria-expanded="false" >Admin Tools</a>
                         
 
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="/events/create">Create Events</a></li>
+                            <li><a href="{{ route('events.create') }}">Create Events</a></li>
                             <li><a href="{{ route('categories.index') }}">View/Create Categories</a></li>
                             <li><a href="{{ route('tags.index') }}">View/Create Tags</a></li>
                         </ul>

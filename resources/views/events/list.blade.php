@@ -26,7 +26,7 @@
 	@foreach($events as $event)
        <tr>
         <td>
-        	<span class="event-table-title"><h2><a href="/events/{{$event->id}}" >{{ $event->name }}</a></h2></span>
+        	<span class="event-table-title"><h2><a href="{{route('events.show', ['id' => $event->id], false) }}" >{{ $event->name }}</a></h2></span>
         	<h6>{{ $event->location->name }}</h6>
         	<h6> {{ $event->tickets['availbleTickets'] }}</h6>
         </td>

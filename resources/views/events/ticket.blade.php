@@ -72,7 +72,7 @@ span[rel="tag"]:hover {
 
  	<div class="">
  		<div class="col-md-6 col-md-offset-3 text-center">
- 			<a href="/events/{{ $data['event']['id'] }}"><h1 class="t-white">{{ $data['event']['name'] }}</h1></a>
+ 			<a href="{{route('events.show', ['id' => $data['event']['id']], false) }}"><h1 class="t-white">{{ $data['event']['name'] }}</h1></a>
  			<input id="eventid" value="{{ $data['event']['id'] }}" hidden>
  		</div>
  	</div>

@@ -110,7 +110,7 @@ span[rel="tag"]:hover {
 
  	<div class="">
  		<div class="col-md-6 col-md-offset-3 text-center">
- 			<a href="/events/{{ $ticket->event->id }}"><h1 class="t-white">{{ $ticket->event->name }}</h1></a>
+ 			<a href="{{ route('events.show', ['id' => $ticket->event->id], false) }}"><h1 class="t-white">{{ $ticket->event->name }}</h1></a>
  			<input id="eventid" value="{{ $ticket->event['id'] }}" hidden>
  		</div>
  	</div>
@@ -240,67 +240,16 @@ span[rel="tag"]:hover {
                     @endforeach
 
 
-                    
-                    <figure data-dummy>
-                        <a href="#" class="photostack-img"><img src="img/7.jpg" alt="img07"/></a>
+                    @for($i =0;$i < 7; $i++)
+                        <figure data-dummy>
+                        <a href="#" class="photostack-img"><img src="" alt=""/></a>
                         <figcaption>
-                            <h2 class="photostack-title">Lovely Green</h2>
+                            <h2 class="photostack-title">@if($ticket->event->tags->first->name->name)#{{$ticket->event->tags->first->name->name}}@endif</h2>
                         </figcaption>
                     </figure>
-                    <figure data-dummy>
-                        <a href="#" class="photostack-img"><img src="img/8.jpg" alt="img08"/></a>
-                        <figcaption>
-                            <h2 class="photostack-title">Wonderful</h2>
-                        </figcaption>
-                    </figure>
-                    <figure data-dummy>
-                        <a href="#" class="photostack-img"><img src="img/9.jpg" alt="img09"/></a>
-                        <figcaption>
-                            <h2 class="photostack-title">Love Addict</h2>
-                        </figcaption>
-                    </figure>
-                    <figure data-dummy>
-                        <a href="#" class="photostack-img"><img src="img/10.jpg" alt="img10"/></a>
-                        <figcaption>
-                            <h2 class="photostack-title">Friendship</h2>
-                        </figcaption>
-                    </figure>
-                    <figure data-dummy>
-                        <a href="#" class="photostack-img"><img src="img/11.jpg" alt="img11"/></a>
-                        <figcaption>
-                            <h2 class="photostack-title">White Nights</h2>
-                        </figcaption>
-                    </figure>
-                    <figure data-dummy>
-                        <a href="#" class="photostack-img"><img src="img/12.jpg" alt="img12"/></a>
-                        <figcaption>
-                            <h2 class="photostack-title">Serendipity</h2>
-                        </figcaption>
-                    </figure>
-                    <figure data-dummy>
-                        <a href="#" class="photostack-img"><img src="img/13.jpg" alt="img13"/></a>
-                        <figcaption>
-                            <h2 class="photostack-title">Pure Soul</h2>
-                        </figcaption>
-                    </figure>
-                    <figure data-dummy>
-                        <a href="#" class="photostack-img"><img src="img/14.jpg" alt="img14"/></a>
-                        <figcaption>
-                            <h2 class="photostack-title">Winds of Peace</h2>
-                        </figcaption>
-                    </figure>
-                    <figure data-dummy>
-                        <a href="#" class="photostack-img"><img src="img/15.jpg" alt="img15"/></a>
-                        <figcaption>
-                            <h2 class="photostack-title">Shades of blue</h2>
-                        </figcaption>
-                    </figure>
-                    <figure data-dummy>
-                        <a href="#" class="photostack-img"><img src="img/16.jpg" alt="img16"/></a>
-                        <figcaption>
-                            <h2 class="photostack-title">Lightness</h2>
-                        </figcaption>
-                    </figure>
+
+                    @endfor
+
 
                 
                 </div>

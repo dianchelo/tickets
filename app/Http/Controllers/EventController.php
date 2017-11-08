@@ -282,7 +282,12 @@ class EventController extends Controller
                 echo '<td>'. $event->name .'</td>';
                 echo '<td>'. $event->description .'</td>';
                 echo '<td>'. date('l j F, Y', strtotime($event->event_date)) .'</td>';
-                echo '<td><a href="/events/'.$event->id .'" class="btn btn-default btn-sm">View</a> <a href="/events/'.$event->id .'/edit" class="btn btn-default btn-sm">Edit</a></td>';
+                echo '<td><a href="'. route('events.show', ['id' => $event->id]) .'" class="btn btn-default btn-sm">View</a> <a href="/events/'.$event->id .'/edit" class="btn btn-default btn-sm">Edit</a></td>';
+
+
+                //echo '<td>'. {!! Html::linkRoute('events.show', 'View', $event->id, array('class' => 'btn btn-default btn-sm')) !!} . {!! Html::linkRoute('events.edit', 'Edit', $event->id, array('class' => 'btn btn-default btn-sm')) !!};
+
+
                 echo '</tr>';
             }
 
